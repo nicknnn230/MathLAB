@@ -23,11 +23,11 @@ def ableiten():
 
     if diff_label is None:
 
-        diff_label = tk.Label(root, text=f"1. Ableitung von f(x): {differentiation}")
+        diff_label = tk.Label(root, text=f"1. Ableitung von f(x):               {differentiation}")
         diff_label.grid(row=1, column=0, columnspan=2, sticky="w")
     else:
 
-        diff_label.config(text=f"1. Ableitung von f(x): {differentiation}")
+        diff_label.config(text=f"1. Ableitung von f(x):             {differentiation}")
 
 
 
@@ -50,19 +50,83 @@ def integrieren():
     if integration != "Ungültiger Ausdruck. Bitte gültige Funktion eingeben.":
         if integrate_label is None:
 
-            integrate_label = tk.Label(root, text=f"Stammfunktion von f(x): {integration} + c")
+            integrate_label = tk.Label(root, text=f"Stammfunktion von f(x):             {integration} + c")
             integrate_label.grid(row=2, column=0, columnspan=2, sticky="w")
         else:
 
-            integrate_label.config(text=f"Stammfunktion von f(x): {integration} + c")
+            integrate_label.config(text=f"Stammfunktion von f(x):               {integration} + c")
     else:
         if integrate_label is None:
 
-            integrate_label = tk.Label(root, text=f"Stammfunktion von f(x): {integration}")
+            integrate_label = tk.Label(root, text=f"Stammfunktion von f(x):             {integration}")
             integrate_label.grid(row=2, column=0, columnspan=2, sticky="w")
         else:
 
-            integrate_label.config(text=f"Stammfunktion von f(x): {integration}")
+            integrate_label.config(text=f"Stammfunktion von f(x):               {integration}")
+
+
+def open_window():
+    global e1_a
+    global e2_b
+
+
+    bestimmt_integrieren_window = tk.Toplevel(root)
+    bestimmt_integrieren_window.title("Bestimmte Integration")
+    bestimmt_integrieren_window.geometry("300x200")
+
+    w = tk.Label(bestimmt_integrieren_window, text="Grenzen der bestimmten Integration von f(x)")
+    w.grid(row=0, column=0)
+
+    tk.Label(bestimmt_integrieren_window, text="a =").grid(row=1, column=0, sticky="w")
+    e1_a = tk.Entry(bestimmt_integrieren_window)
+    e1_a.grid(row=1, column=0, sticky="w", padx=25, pady=5)
+
+    tk.Label(bestimmt_integrieren_window, text="b =").grid(row=2, column=0, sticky="w")
+    e2_b = tk.Entry(bestimmt_integrieren_window)
+    e2_b.grid(row=2, column=0, sticky="w", padx=25, pady=5)
+
+    button_integrieren = tk.Button(bestimmt_integrieren_window, text='ausführen', command=bestimmt_integrieren)
+    button_integrieren.grid(row=3, column=0, sticky="w", padx=25, pady=5)
+
+
+def bestimmt_integrieren():
+    global bestimmt_integrieren_label
+    global e1_a
+    global e2_b
+    
+
+    a = e1_a.get()
+    b = e2_b.get()
+    function = e1.get()
+
+    try:
+
+        expression_inte = sympify(function)
+        expression_a = sympify(a)
+        expression_b = sympify(b)
+
+        integration = integrate(expression_inte, x)
+
+        simplify(integration)
+
+        result_a = integration.subs(x, expression_a)
+        result_b = integration.subs(x, expression_b)
+
+        b_integration = result_b - result_a
+
+    except SympifyError:
+        b_integration = "Ungültiger Ausdruck. Bitte gültige Funktion eingeben oder Grenzen überprüfen."
+
+
+    if bestimmt_integrieren_label is None:
+
+        bestimmt_integrieren_label = tk.Label(root, text=f"Bestimmte Integration von {expression_a} bis {expression_b}:             {b_integration}")
+        bestimmt_integrieren_label.grid(row=3, column=0, columnspan=2, sticky="w")
+    else:
+
+        bestimmt_integrieren_label.config(text=f"Bestimmte Integration von {expression_a} bis {expression_b}:               {b_integration}")    
+
+    
 
 def Nullstellen():
     global solve_label
@@ -79,11 +143,11 @@ def Nullstellen():
 
     if solve_label is None:
 
-        solve_label = tk.Label(root, text=f"Nullstellen von f(x): {nullstellen}")
+        solve_label = tk.Label(root, text=f"Nullstellen von f(x):               {nullstellen}")
         solve_label.grid(row=4, column=0, columnspan=2, sticky="w")
     else:
 
-        solve_label.config(text=f"Nullstellen von f(x): {nullstellen}")   
+        solve_label.config(text=f"Nullstellen von f(x):             {nullstellen}")   
 
 
 
@@ -118,6 +182,10 @@ algebra_menu.add_command(label='Ableiten', command=ableiten)
 diff_label = None
 algebra_menu.add_command(label='Stammfunktion', command=integrieren)
 integrate_label = None
+algebra_menu.add_command(label='Bestimmt Integrieren', command=open_window)
+bestimmt_integrieren_label = None
+e1_a = None
+e2_b = None
 algebra_menu.add_command(label='Nullstellen', command=Nullstellen)
 solve_label = None
 menu.add_cascade(label='Algebra', menu=algebra_menu)
