@@ -149,6 +149,47 @@ def Nullstellen():
 
         solve_label.config(text=f"Nullstellen von f(x):             {nullstellen}")   
 
+def limes_window():
+    global e1_limes
+
+
+    limes_window = tk.Toplevel(root)
+    limes_window.title("Limes")
+    limes_window.geometry("300x80")
+
+    tk.Label(limes_window, text="x ->").grid(row=1, column=0, sticky="w")
+    e1_limes = tk.Entry(limes_window)
+    e1_limes.grid(row=1, column=0, sticky="w", padx=25, pady=5)
+
+    button_limes = tk.Button(limes_window, text='ausführen', command=limes)
+    button_limes.grid(row=3, column=0, sticky="w", padx=25, pady=5)
+
+def limes():
+    global limit_label
+    global e1_limes
+
+    lim = e1_limes.get()
+
+    function = e1.get()
+
+    try:
+
+        expression_limit = sympify(function)
+
+        grenzwert = limit(expression_limit, x, lim)
+
+    except SympifyError:
+        grenzwert = "Ungültiger Ausdruck. Bitte gültige Funktion eingeben."
+
+
+
+    if limit_label is None:
+
+        limit_label = tk.Label(root, text=f"lim(x->{lim}):              {grenzwert}")
+        limit_label.grid(row=5, column=0, columnspan=2, sticky="w")
+    else:
+
+        limit_label.config(text=f"lim(x->{lim}):              {grenzwert}")
 
 
 def plotten():
@@ -177,18 +218,21 @@ root.title('MathLAB')
 
 menu = tk.Menu(root)
 
-algebra_menu = tk.Menu(menu, tearoff=0)
-algebra_menu.add_command(label='Ableiten', command=ableiten)
+analysis_menu = tk.Menu(menu, tearoff=0)
+analysis_menu.add_command(label='Ableiten', command=ableiten)
 diff_label = None
-algebra_menu.add_command(label='Stammfunktion', command=integrieren)
+analysis_menu.add_command(label='Stammfunktion', command=integrieren)
 integrate_label = None
-algebra_menu.add_command(label='Bestimmt Integrieren', command=open_window)
+analysis_menu.add_command(label='Bestimmt Integrieren', command=open_window)
 bestimmt_integrieren_label = None
 e1_a = None
 e2_b = None
-algebra_menu.add_command(label='Nullstellen', command=Nullstellen)
+analysis_menu.add_command(label='Nullstellen', command=Nullstellen)
 solve_label = None
-menu.add_cascade(label='Algebra', menu=algebra_menu)
+analysis_menu.add_command(label='Limes', command=limes_window)
+limit_label = None
+e1_limes = None
+menu.add_cascade(label='Analysis', menu=analysis_menu)
 
 plot_menu = tk.Menu(menu, tearoff=0)
 plot_menu.add_command(label='Plot', command=plotten)
