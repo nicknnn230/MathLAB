@@ -229,7 +229,7 @@ def limes():
 
 
 def plotten():
-    function = e1.get()
+    function = sympify(e1.get())
 
     f_lambda = lambdify(x, function, 'numpy')
 

@@ -54,13 +54,3 @@ class differenzialrechnung:
         return normale
     
 
-
-
-'''
-x = symbols('x')
-funktion = x**2
-tangente = differenzialrechnung()
-print(tangente.tangente(funktion, 2))
-print(tangente.normale(funktion, 2))
-'''
-
