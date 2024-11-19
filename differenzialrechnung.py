@@ -52,5 +52,3 @@ class differenzialrechnung:
 
 
         return normale
-    
-

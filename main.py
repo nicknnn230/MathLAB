@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import font
 from sympy import symbols, diff, integrate, sympify, SympifyError, lambdify, limit, solve, simplify, Subs, oo
 import matplotlib.pyplot as plt
 import numpy as np
@@ -22,11 +21,11 @@ def ableiten():
 
     if diff_label is None:
 
-        diff_label = tk.Label(root, text=f"1. Ableitung von f(x):               {differentiation}")
+        diff_label = tk.Label(root, text=f"1. Ableitung von f(x):  {differentiation}")
         diff_label.grid(row=5, column=0, columnspan=2, sticky="w")
     else:
 
-        diff_label.config(text=f"1. Ableitung von f(x):             {differentiation}")
+        diff_label.config(text=f"1. Ableitung von f(x):  {differentiation}")
 
 
 
@@ -59,11 +58,11 @@ def tangente():
 
     if tangenten_label is None:
 
-        tangenten_label = tk.Label(root, text=f"Tangente von f(x) an der Stelle {x0}:               {tangente_function}")
+        tangenten_label = tk.Label(root, text=f"Tangente von f(x) an der Stelle {x0}:  {tangente_function}")
         tangenten_label.grid(row=6, column=0, columnspan=2, sticky="w")
     else:
 
-        tangenten_label.config(text=f"Tangente von f(x) an der Stelle {x0}:             {tangente_function}")
+        tangenten_label.config(text=f"Tangente von f(x) an der Stelle {x0}:  {tangente_function}")
 
 
 def normalen_window():
@@ -96,11 +95,11 @@ def normale():
 
     if normalen_label is None:
 
-        normalen_label = tk.Label(root, text=f"Normale von f(x) an der Stelle {x0}:               {normale_function}")
+        normalen_label = tk.Label(root, text=f"Normale von f(x) an der Stelle {x0}:  {normale_function}")
         normalen_label.grid(row=7, column=0, columnspan=2, sticky="w")
     else:
 
-        normalen_label.config(text=f"Normale von f(x) an der Stelle {x0}:             {normale_function}")
+        normalen_label.config(text=f"Normale von f(x) an der Stelle {x0}:  {normale_function}")
 
 def integrieren():
     global integrate_label
@@ -115,19 +114,19 @@ def integrieren():
     if integration != "Ungültiger Ausdruck. Bitte gültige Funktion eingeben.":
         if integrate_label is None:
 
-            integrate_label = tk.Label(root, text=f"Stammfunktion von f(x):             {integration} + c")
+            integrate_label = tk.Label(root, text=f"Stammfunktion von f(x):  {integration} + c")
             integrate_label.grid(row=8, column=0, columnspan=2, sticky="w")
         else:
 
-            integrate_label.config(text=f"Stammfunktion von f(x):               {integration} + c")
+            integrate_label.config(text=f"Stammfunktion von f(x):  {integration} + c")
     else:
         if integrate_label is None:
 
-            integrate_label = tk.Label(root, text=f"Stammfunktion von f(x):             {integration}")
+            integrate_label = tk.Label(root, text=f"Stammfunktion von f(x):  {integration}")
             integrate_label.grid(row=8, column=0, columnspan=2, sticky="w")
         else:
 
-            integrate_label.config(text=f"Stammfunktion von f(x):               {integration}")
+            integrate_label.config(text=f"Stammfunktion von f(x):  {integration}")
 
 
 def open_window():
@@ -170,11 +169,11 @@ def bestimmt_integrieren():
 
     if bestimmt_integrieren_label is None:
 
-        bestimmt_integrieren_label = tk.Label(root, text=f"Bestimmte Integration von {a} bis {b}:             {b_integration}")
+        bestimmt_integrieren_label = tk.Label(root, text=f"Bestimmte Integration von {a} bis {b}:  {b_integration}")
         bestimmt_integrieren_label.grid(row=9, column=0, columnspan=2, sticky="w")
     else:
 
-        bestimmt_integrieren_label.config(text=f"Bestimmte Integration von {a} bis {b}:               {b_integration}")    
+        bestimmt_integrieren_label.config(text=f"Bestimmte Integration von {a} bis {b}:  {b_integration}")    
 
     
 
@@ -188,11 +187,11 @@ def Nullstellen():
 
     if solve_label is None:
 
-        solve_label = tk.Label(root, text=f"Nullstellen von f(x):               {nullstellen}")
+        solve_label = tk.Label(root, text=f"Nullstellen von f(x):  {nullstellen}")
         solve_label.grid(row=10, column=0, columnspan=2, sticky="w")
     else:
 
-        solve_label.config(text=f"Nullstellen von f(x):             {nullstellen}")   
+        solve_label.config(text=f"Nullstellen von f(x):  {nullstellen}")   
 
 def limes_window():
     global e1_limes
@@ -224,11 +223,11 @@ def limes():
 
     if limit_label is None:
 
-        limit_label = tk.Label(root, text=f"lim(x->{lim}):              {grenzwert}")
+        limit_label = tk.Label(root, text=f"lim(x->{lim}):  {grenzwert}")
         limit_label.grid(row=11, column=0, columnspan=2, sticky="w")
     else:
 
-        limit_label.config(text=f"lim(x->{lim}):              {grenzwert}")
+        limit_label.config(text=f"lim(x->{lim}):  {grenzwert}")
 
 
 
@@ -246,12 +245,49 @@ def g_ableiten():
 
     if g_diff_label is None:
 
-        g_diff_label = tk.Label(root, text=f"1. Ableitung von g(x):               {g_differentiation}")
-        g_diff_label.grid(row=5, column=1, columnspan=2, sticky="w", padx=300)
+        g_diff_label = tk.Label(root, text=f"1. Ableitung von g(x):  {g_differentiation}")
+        g_diff_label.grid(row=12, column=0, columnspan=2, sticky="w")
     else:
 
-        g_diff_label.config(text=f"1. Ableitung von g(x):             {g_differentiation}")
+        g_diff_label.config(text=f"1. Ableitung von g(x):  {g_differentiation}")
 
+def g_tangente_window():
+    global g_tangenten_label
+    global g_entry_x0
+
+    t_n_window = tk.Toplevel(root)
+    t_n_window.title("x0 bestimmen (Tangente) g(x)")
+    t_n_window.geometry("300x100")
+
+    w = tk.Label(t_n_window, text=f"x-Stelle der Tangente")
+    w.grid(row=0, column=0, sticky='w')
+
+    tk.Label(t_n_window, text="x0 =").grid(row=1, column=0, sticky="w")
+    g_entry_x0 = tk.Entry(t_n_window)
+    g_entry_x0.grid(row=1, column=0, sticky="w", padx=25, pady=5)
+
+    button_tangente = tk.Button(t_n_window, text='ausführen', command=g_tangente)
+    button_tangente.grid(row=3, column=0, sticky="w", padx=25, pady=5)
+
+def g_tangente():
+    global g_tangenten_label
+    global g_entry_x0
+
+
+    function = g_e.get()
+
+    x0 = int(g_entry_x0.get())
+
+    tang = differenzialrechnung()
+    tangente_function = tang.tangente(function, x0)
+
+    if g_tangenten_label is None:
+
+        g_tangenten_label = tk.Label(root, text=f"Tangente von g(x) an der Stelle {x0}:  {tangente_function}")
+        g_tangenten_label.grid(row=13, column=0, columnspan=2, sticky="w")
+    else:
+
+        g_tangenten_label.config(text=f"Tangente von g(x) an der Stelle {x0}:  {tangente_function}")
 
 
 
@@ -272,17 +308,28 @@ def plotten():
 
     function1 = sympify(e1.get())
 
-    if g_e != None:
-        function2 = sympify(g_e.get())
+    # try:
+    #     test_g_plotten = sympify(g_e.get)
+    #     g_plotten = True
 
-        f2_lambda = lambdify(x, function2, 'numpy')
-        func2_x_vals = np.linspace(-7, 7, 200)
-        func2_y_vals = f2_lambda(func2_x_vals)
+    # except SympifyError:
+    #     g_plotten = False
 
-        func2_x_vals = np.linspace(-7, 7, 200)
-        func2_y_vals = f2_lambda(func2_x_vals)
+    if (g_e != None):
+        try:
+            function2 = sympify(g_e.get())
+        except SympifyError:
+            function2 = False
 
-        plt.plot(func2_x_vals, func2_y_vals, label = str(function2), color='red')
+        if (function2 != False):
+            f2_lambda = lambdify(x, function2, 'numpy')
+            func2_x_vals = np.linspace(-7, 7, 200)
+            func2_y_vals = f2_lambda(func2_x_vals)
+
+            func2_x_vals = np.linspace(-7, 7, 200)
+            func2_y_vals = f2_lambda(func2_x_vals)
+
+            plt.plot(func2_x_vals, func2_y_vals, label = str(function2), color='red')
 
 
 
@@ -301,7 +348,6 @@ def plotten():
     plt.ylim(-50, 50)
     plt.xlabel('x')
     plt.ylabel('f(x)')
-    plt.title('Graph der Funktionen')
     plt.legend()
     plt.grid(True)
 
@@ -317,12 +363,12 @@ def funktion_hinzufügen():
 
     plus_function = plus_function + 1
 
-    if plus_function > 0:
+    if plus_function == 1:
         g_analysis_menu = tk.Menu(menu, tearoff=0)
         g_differenzial_menu = tk.Menu(g_analysis_menu, tearoff=0)
         g_analysis_menu.add_cascade(label='Differenzialrechnung g(x)', menu=g_differenzial_menu)
         g_differenzial_menu.add_command(label='Ableiten g(x)', command=g_ableiten)
-        g_differenzial_menu.add_command(label='Tangentenbestimmung g(x)', command=None)
+        g_differenzial_menu.add_command(label='Tangentenbestimmung g(x)', command= g_tangente_window)
         g_differenzial_menu.add_command(label='Normalenbestimmung g(x)', command=None)
         g_analysis_menu.add_command(label='Stammfunktion g(x)', command=None)
         g_analysis_menu.add_command(label='Bestimmt Integrieren g(x)', command=None)
@@ -330,7 +376,6 @@ def funktion_hinzufügen():
         g_analysis_menu.add_command(label='Limes g(x)', command=None)
         menu.insert_cascade(2, label='Analysis g(x)', menu=g_analysis_menu)
 
-        tk.Label(root, text="g(x)", font=my_font).grid(row=3, column=1, sticky="w", padx=300)
 
         tk.Label(root, text="g(x) =").grid(row=1, column=0, sticky="w")
         g_e = tk.Entry(root)
@@ -349,6 +394,7 @@ root.title('MathLAB')
 
 menu = tk.Menu(root)
 
+
 analysis_menu = tk.Menu(menu, tearoff=0)
 differenzial_menu = tk.Menu(analysis_menu, tearoff=0)
 analysis_menu.add_cascade(label='Differenzialrechnung', menu=differenzial_menu)
@@ -361,6 +407,7 @@ differenzial_menu.add_command(label='Tangentenbestimmung', command=tangente_wind
 tangenten_label = None
 entry_x0 = None
 g_tangenten_label = None
+g_entry_x0 = None
 
 differenzial_menu.add_command(label='Normalenbestimmung', command=normalen_window)
 normalen_label = None
@@ -394,14 +441,12 @@ plus_function_menu.add_command(label='Funktion hinzufügen', command=funktion_hi
 plus_function = 0
 menu.add_cascade(label='Funktionen hinzufügen', menu=plus_function_menu)
 
+is_g_there = False
     
 
 plot_menu = tk.Menu(menu, tearoff=0)
 plot_menu.add_command(label='Plot', command=plotten)
 menu.add_cascade(menu=plot_menu, label='Plotten')
-
-my_font = font.Font(size=12)
-tk.Label(root, text="f(x)", font=my_font).grid(row=3, column=0, sticky="w")
 
 tk.Label(root, text="f(x) =").grid(row=0, column=0, sticky="w")
 e1 = tk.Entry(root)
