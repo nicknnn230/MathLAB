@@ -21,7 +21,7 @@ class analysis:
         return integration
 
 
-    def bestimmt_integrieren(function, a, b):
+    def bestimmt_integrieren(self, function, a, b):
         x = symbols('x')
         try:
 
