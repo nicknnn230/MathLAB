@@ -6,6 +6,7 @@ from differenzialrechnung import differenzialrechnung
 from Analysis import analysis
 
 next_row = 1
+plot_color = 0
 
 
 
@@ -25,6 +26,7 @@ def ableiten():
     diff_label.grid(row=next_row, column=0, columnspan=2, sticky="w", pady=5)
 
     next_row += 1
+
 
 
 
@@ -59,6 +61,7 @@ def tangente():
     next_row += 1
 
 
+
 def normalen_window():
     global entry_x0_normale
 
@@ -90,9 +93,9 @@ def normale():
 
     next_row += 1
 
+
 def integrieren():
     global next_row
-
     function = e1.get()
 
     expression_integration = analysis()
@@ -107,6 +110,7 @@ def integrieren():
     integrate_label.grid(row=next_row, column=0, columnspan=2, sticky="w", pady=5)
 
     next_row += 1
+
 
 
 
@@ -151,6 +155,7 @@ def bestimmt_integrieren():
     next_row += 1
 
 
+
     
 
 def Nullstellen():
@@ -164,6 +169,7 @@ def Nullstellen():
     solve_label.grid(row=next_row, column=0, columnspan=2, sticky="w", pady=5)
 
     next_row += 1
+
 
 
 def limes_window():
@@ -210,35 +216,45 @@ def limes():
 
 
 
+
 def plotten():
-    global g_e
+    global g_e, plot_color
+
+    plot_color += 1
 
     function1 = sympify(e1.get())
-
-
+    colors = ['blue', 'green', 'red', 'purple', 'orange', 'cyan', 'magenta', 'yellow']
 
     f_lambda = lambdify(x, function1, 'numpy')
 
     func1_x_vals = np.linspace(-7, 7, 200)
     func1_y_vals = f_lambda(func1_x_vals)
 
-    func1_x_vals = np.linspace(-7, 7, 200)
-    func1_y_vals = f_lambda(func1_x_vals)
+    color = colors[plot_color % len(colors)]
 
 
-    plt.plot(func1_x_vals, func1_y_vals, label = str(function1), color='blue')
+    plt.plot(func1_x_vals, func1_y_vals, label=str(function1), color=color, linestyle='-', linewidth=2)
 
 
     plt.ylim(-50, 50)
-    plt.xlabel('x')
-    plt.ylabel('f(x)')
-    plt.legend()
-    plt.grid(True)
+    plt.xlabel('x-Achse', fontsize=12, color='black')  
+    plt.ylabel('f(x)', fontsize=12, color='black')  
 
-    plt.gca().set_facecolor('#333333')
-    plt.grid(color='lightblue', linestyle=':', linewidth=0.5)
+
+    plt.grid(True, color='black', linestyle='--', linewidth=0.7)  
+
+
+    plt.gca().set_facecolor('white')  
+
+
+    plt.legend(facecolor='white', loc='upper left', fontsize=10, frameon=True, edgecolor='black')  
+
+
+    plt.gca().set_autoscale_on(True)  
 
     plt.show()
+
+
 
 
 
