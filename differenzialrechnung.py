@@ -41,13 +41,13 @@ class differenzialrechnung:
 
         sympify_function = sympify(function)
 
-        function_1_normale = sympify_function
-        function_2_normale = self.differenzieren(sympify_function)
+        function_1_tangente = sympify_function
+        function_2_tangente = self.differenzieren(sympify_function)
 
-        result_function_1_normale = function_1_normale.subs(x, x0)
-        result_function_2_normale = function_2_normale.subs(x, x0)
+        result_function_1_tangente = function_1_tangente.subs(x, x0)
+        result_function_2_tangente = function_2_tangente.subs(x, x0)
 
-        normale = (-1/result_function_2_normale) * (x-x0) + result_function_1_normale
+        normale = -1/(result_function_2_tangente) * (x-x0) + result_function_1_tangente
         simplify(normale)
 
 

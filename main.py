@@ -204,17 +204,150 @@ def limes():
 
 
 
+def umkehrfunktion():
+    x, y = symbols('x y')
+
+    function = e1.get()
+
+    try:
+        sympify_function = sympify(function)  
+        equation = y - sympify_function 
+
+        inverse_solution = solve(equation, x)  
+        
+        if inverse_solution:
+            result_y = inverse_solution[0]  
+        else:
+            result_y = "Keine Umkehrfunktion gefunden"
+    except SympifyError:
+        result_y = "Ungültiger Ausdruck. Bitte gültige Funktion eingeben."
+
+    y_label = tk.Label(root, text=f"{function}: Umkehrfunktion von {function} = {result_y}")
+    y_label.grid(row=next_row, column=0, columnspan=2, sticky="w", pady=5)
 
 
 
+def lgs_window():
+    global entry_matrix, entry_vector, rows, cols, create_btn 
+
+    lgs_win = tk.Toplevel(root)
+    lgs_win.title("Lineares Gleichungssystem lösen")
+    
+    tk.Label(lgs_win, text="Anzahl der Gleichungen:").grid(row=0, column=0)
+    tk.Label(lgs_win, text="Anzahl der Variablen:").grid(row=1, column=0)
+
+    entry_rows = tk.Entry(lgs_win)
+    entry_cols = tk.Entry(lgs_win)
+    entry_rows.grid(row=0, column=1)
+    entry_cols.grid(row=1, column=1)
+
+    def create_matrix_inputs():
+        """Erstellt Eingabefelder für die Koeffizientenmatrix und das Ergebnis."""
+        global entry_matrix, entry_vector, rows, cols, create_btn
+        rows = int(entry_rows.get())
+        cols = int(entry_cols.get())
+
+        matrix_frame = tk.Frame(lgs_win)
+        matrix_frame.grid(row=3, column=0, columnspan=cols+2, sticky="we")
+
+        entry_matrix = []
+        for i in range(rows):
+            row = []
+            for j in range(cols):
+                entry = tk.Entry(matrix_frame, width=5) 
+                row.append(entry)
+            entry_matrix.append(row)
+
+        entry_vector = []
+        for i in range(rows):
+            entry = tk.Entry(matrix_frame, width=5) 
+            entry_vector.append(entry)
+
+        for i in range(rows):
+            for j in range(cols):
+                entry_matrix[i][j].grid(row=i+3, column=j, padx=0, pady=0)
+
+        for i in range(rows):
+            entry_vector[i].grid(row=i+3, column=cols+1)
+
+        solve_button = tk.Button(lgs_win, text="Lösen", command=solve_lgs)
+        solve_button.grid(row=rows+4, column=0, columnspan=cols+2)
+
+        det_button = tk.Button(lgs_win, text='Determinante berechnen', command=solve_det)
+        det_button.grid(row=rows+5, column=0, columnspan=cols+2)
+
+        create_btn.destroy()
+        for j in range(cols + 2):
+            matrix_frame.columnconfigure(j, weight=0, uniform="matrix_col")
+
+    create_btn = tk.Button(lgs_win, text="Eingabefelder erstellen", command=create_matrix_inputs)
+    create_btn.grid(row=2, column=1)
 
 
+def solve_lgs():
+    """Löst das lineare Gleichungssystem."""
+    global entry_matrix, entry_vector, rows, cols, next_row
+    try:
+        A = []
+        for i in range(rows):  # Durchläuft jede Zeile der Matrix
+            row = []
+            for j in range(cols):  # Durchläuft jede Spalte der aktuellen Zeile
+                value = float(entry_matrix[i][j].get())  # Holt den Wert aus dem Eingabefeld und wandelt ihn in eine Zahl um
+                row.append(value)  # Fügt den Wert zur aktuellen Zeile hinzu
+            A.append(row)  # Fügt die Zeile zur Matrix hinzu
+
+        A = np.array(A)
 
 
+        b = []
+        for i in range(rows):  # Durchläuft alle Zeilen (da der Vektor nur eine Spalte hat)
+            value = float(entry_vector[i].get())  # Holt den Wert aus dem Eingabefeld
+            b.append(value)  # Fügt den Wert zur Liste hinzu
 
+        b = np.array(b)  # Wandelt die Liste in ein NumPy-Array um
 
+        solution = np.linalg.solve(A, b)
 
+        result_label = tk.Label(root, text=f"Lösung LGS: {solution}")
+        result_label.grid(row=next_row, column=0, columnspan=2, sticky="w", pady=5)
 
+        next_row += 1
+
+    except np.linalg.LinAlgError:
+        error_label = tk.Label(root, text="Keine eindeutige Lösung (Singuläre Matrix).")
+        error_label.grid(row=next_row, column=0, columnspan=2, sticky="w", pady=5)
+        next_row += 1
+    except ValueError:
+        error_label = tk.Label(root, text="Bitte gültige Zahlen eingeben.")
+        error_label.grid(row=next_row, column=0, columnspan=2, sticky="w", pady=5)
+        next_row += 1
+
+def solve_det():
+    global entry_matrix, rows, cols, next_row
+    try:
+        A = []
+        for i in range(rows):  
+            row = []
+            for j in range(cols):  
+                value = float(entry_matrix[i][j].get()) 
+                row.append(value)
+            A.append(row)  
+
+        A = np.array(A)  
+        det_A = round(np.linalg.det(A), 4) 
+
+        result_label = tk.Label(root, text=f"Determinante: {det_A}")
+        result_label.grid(row=next_row, column=0, columnspan=2, sticky="w", pady=5)
+        next_row += 1
+    
+    except np.linalg.LinAlgError:
+        error_label = tk.Label(root, text="Determinante nicht definiert (keine quadratische Matrix).")
+        error_label.grid(row=next_row, column=0, columnspan=2, sticky="w", pady=5)
+        next_row += 1
+    except ValueError:
+        error_label = tk.Label(root, text="Bitte gültige Zahlen eingeben.")
+        error_label.grid(row=next_row, column=0, columnspan=2, sticky="w", pady=5)
+        next_row += 1
 
 
 def plotten():
@@ -299,12 +432,16 @@ analysis_menu.add_command(label='Limes', command=limes_window)
 limit_label = None
 e1_limes = None
 
+analysis_menu.add_command(label='Umkehrfunktion bilden', command=umkehrfunktion)
+
+analysis_menu.add_command(label='LGS lösen', command=lgs_window)
+
 menu.add_cascade(label='Analysis', menu=analysis_menu)
     
 
 plot_menu = tk.Menu(menu, tearoff=0)
-plot_menu.add_command(label='Plot', command=plotten)
-menu.add_cascade(menu=plot_menu, label='Plotten')
+plot_menu.add_command(label='anzeigen', command=plotten)
+menu.add_cascade(menu=plot_menu, label='Funktionen')
 
 tk.Label(root, text="f(x) =").grid(row=0, column=0, sticky="w")
 e1 = tk.Entry(root)
