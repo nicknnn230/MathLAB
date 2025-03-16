@@ -32,3 +32,11 @@ MathLAB is a desktop application designed to simplify calculus operations and gr
    ```bash
    git clone https://github.com/your-username/MathLAB.git
    cd MathLAB
+
+2. **Install tkinter**
+   ```bash
+   pip install tk
+
+3. **Run file**
+   ```bash
+   python main.py
